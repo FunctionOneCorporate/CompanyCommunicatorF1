@@ -1,0 +1,43 @@
+@import 'react-big-calendar/lib/sass/styles';
+
+.calendar {
+    &__container {
+        padding: 2rem;
+        background: #fff;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0.2rem 0.4rem -0.075rem;
+    }
+
+
+    &__component {
+        .rbc {
+            &-toolbar {
+                button {
+                    cursor: pointer;
+                    text-overflow: ellipsis;
+                    font-weight: 600;
+                    background-color: rgb(98, 100, 167);
+                    border-radius: 2px;
+                    color: rgb(255, 255, 255);
+                    line-height: 1.15;
+                }
+            }
+            &-event {
+                cursor: pointer;
+                text-overflow: ellipsis;
+                font-weight: 600;
+                background-color: rgb(98, 100, 167);
+                border-radius: 2px;
+                color: rgb(255, 255, 255);
+                line-height: 1.15;
+            }
+
+            &-today {
+                background-color: #8b8cc7;
+            }
+
+            &-current {
+                color: #fff;
+            }
+        }
+    }
+}
