@@ -1,3 +1,9 @@
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Azure;
+using Azure.Storage.Queues;
+using Azure.Storage.Blobs;
+using Azure.Core.Extensions;
+using System;
 // <copyright file="Startup.cs" company="Microsoft">
 // Copyright (c) Microsoft. All rights reserved.
 // </copyright>
@@ -209,6 +215,11 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator
             services.AddTransient<TableRowKeyGenerator>();
             services.AddTransient<AdaptiveCardCreator>();
             services.AddSingleton<IAppSettingsService, AppSettingsService>();
+            services.AddAzureClients(builder =>
+            {
+                builder.AddBlobServiceClient(Configuration["StorageAccountConnectionString:blob"], preferMsi: true);
+                builder.AddQueueServiceClient(Configuration["StorageAccountConnectionString:queue"], preferMsi: true);
+            });
         }
 
         /// <summary>
@@ -294,6 +305,31 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator
                     }.ToString());
                 }
             });
+        }
+    }
+    internal static class StartupExtensions
+    {
+        public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+        {
+            if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri serviceUri))
+            {
+                return builder.AddBlobServiceClient(serviceUri);
+            }
+            else
+            {
+                return builder.AddBlobServiceClient(serviceUriOrConnectionString);
+            }
+        }
+        public static IAzureClientBuilder<QueueServiceClient, QueueClientOptions> AddQueueServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+        {
+            if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri serviceUri))
+            {
+                return builder.AddQueueServiceClient(serviceUri);
+            }
+            else
+            {
+                return builder.AddQueueServiceClient(serviceUriOrConnectionString);
+            }
         }
     }
 }

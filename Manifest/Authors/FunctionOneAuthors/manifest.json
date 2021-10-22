@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.5",
+  "version": "1.0.0",
+  "id": "81278686-44f9-4eef-9687-a29c844e4d85",
+  "packageName": "F1_Communicator",
+  "developer": {
+    "name": "Function One",
+    "websiteUrl": "https://functionone.com.br",
+    "privacyUrl": "https://functionone.com.br/privacy",
+    "termsOfUseUrl": "https://functionone.com.br/policy"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "F1_Communicator Authors",
+    "full": "F1_Communicator Authors"
+  },
+  "description": {
+    "short": "Broadcast messages to multiple teams and people in one go",
+    "full": "Broadcasts messages to multiple teams and individuals through channel posts and chat messages"
+  },
+  "accentColor": "#64A2CC",
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://companycommunicatoralbertosoares1.azurefd.net/configtab",
+      "canUpdateConfiguration": true,
+      "scopes": [
+        "team"
+      ]
+    }
+  ],
+  "bots": [
+    {
+      "botId": "81278686-44f9-4eef-9687-a29c844e4d85",
+      "scopes": [
+        "team"
+      ],
+      "supportsFiles": true,
+      "isNotificationOnly": false
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "companycommunicatoralbertosoares1.azurefd.net"
+  ],
+  "webApplicationInfo": {
+    "id": "81278686-44f9-4eef-9687-a29c844e4d85",
+    "resource": "api://companycommunicatoralbertosoares1.azurefd.net"
+  }
+}

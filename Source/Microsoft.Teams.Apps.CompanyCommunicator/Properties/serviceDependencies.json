@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "secrets1": {
+      "type": "secrets",
+      "connectionId": "VaultUri"
+    },
     "appInsights1": {
       "type": "appInsights",
       "connectionId": "APPINSIGHTS_CONNECTIONSTRING"
@@ -7,10 +11,6 @@
     "storage1": {
       "type": "storage",
       "connectionId": "StorageAccountConnectionString"
-    },
-    "secrets1": {
-      "type": "secrets",
-      "connectionId": "VaultUri"
     }
   }
 }

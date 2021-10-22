@@ -1,0 +1,44 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.5",
+  "version": "1.0.0",
+  "id": "af550c3d-998c-433e-b7ae-a1ec5ebd311e",
+  "packageName": "F1_Communicator",
+  "developer": {
+    "name": "Function One",
+    "websiteUrl": "https://functionone.com.br",
+    "privacyUrl": "https://functionone.com.br/privacy",
+    "termsOfUseUrl": "https://functionone.com.br/policy"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "F1_Communicator Users",
+    "full": "F1_Communicator Users"
+  },
+  "description": {
+    "short": "Broadcast messages to multiple teams and people in one go",
+    "full": "Broadcasts messages to multiple teams and individuals through channel posts and chat messages"
+  },
+  "accentColor": "#64A2CC",
+  "bots": [
+    {
+      "botId": "81278686-44f9-4eef-9687-a29c844e4d85",
+      "scopes": [
+        "personal",
+        "team"
+      ],
+      "supportsFiles": false,
+      "isNotificationOnly": false
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "flaviacustomoutubro.azurefd.net"
+  ]
+}
