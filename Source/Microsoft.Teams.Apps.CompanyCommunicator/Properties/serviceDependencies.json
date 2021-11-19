@@ -1,8 +1,16 @@
 {
   "dependencies": {
+    "identityapp1": {
+      "type": "identityapp",
+      "connectionId": "",
+      "suggestion": "true",
+      "ignored": "true"
+    },
     "secrets1": {
       "type": "secrets",
-      "connectionId": "VaultUri"
+      "connectionId": "",
+      "suggestion": "true",
+      "ignored": "true"
     },
     "appInsights1": {
       "type": "appInsights",

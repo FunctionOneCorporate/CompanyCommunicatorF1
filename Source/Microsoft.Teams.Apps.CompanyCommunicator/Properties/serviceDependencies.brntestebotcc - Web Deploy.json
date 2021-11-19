@@ -6,12 +6,6 @@
       "connectionId": "APPINSIGHTS_CONNECTIONSTRING",
       "secretStore": "AzureAppSettings"
     },
-    "secrets1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/kytestebotcc",
-      "type": "secrets.keyVault",
-      "connectionId": "VaultUri",
-      "secretStore": "AzureAppSettings"
-    },
     "storage1": {
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/gngxztoz7u6ls",
       "type": "storage.azure",

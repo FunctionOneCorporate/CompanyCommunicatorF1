@@ -91,7 +91,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>8.0</LangVersion>
     <UserSecretsId>25c7df93-ca3e-4626-9059-39149d1e3357</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/2564bd2a-4f11-4c76-99b0-30ff092042d6/resourceGroups/botccdezembrofnct/providers/microsoft.insights/components/brnbotccdezembrofnct</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/a18c4a4e-12b3-4aa7-ae70-c11ec4d58187/resourceGroups/botccdezembrofnct/providers/microsoft.insights/components/brnbotccdezembrofnct</ApplicationInsightsResourceId>
   </PropertyGroup>
 
 </Project>

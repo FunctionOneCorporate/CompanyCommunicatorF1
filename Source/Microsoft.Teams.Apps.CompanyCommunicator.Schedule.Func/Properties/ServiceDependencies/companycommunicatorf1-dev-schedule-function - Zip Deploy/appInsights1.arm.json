@@ -4,7 +4,7 @@
   "parameters": {
     "resourceGroupName": {
       "type": "string",
-      "defaultValue": "BRF-RG-COMMUNICATORTEAMS",
+      "defaultValue": "CompanyCommunicatorF1-Dev-Rg",
       "metadata": {
         "_parameterType": "resourceGroup",
         "description": "Name of the resource group for the resource. It is recommended to put resources under same resource group for better tracking."
@@ -12,7 +12,7 @@
     },
     "resourceGroupLocation": {
       "type": "string",
-      "defaultValue": "brazilsouth",
+      "defaultValue": "eastus",
       "metadata": {
         "_parameterType": "location",
         "description": "Location of the resource group. Resource groups could have different location than resources."
@@ -36,7 +36,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('maamo7xfjh3a6', subscription().subscriptionId)))]",
+      "name": "[concat(parameters('resourceGroupName'), 'Deployment', uniqueString(concat('companycommunicatorf1-dev', subscription().subscriptionId)))]",
       "resourceGroup": "[parameters('resourceGroupName')]",
       "apiVersion": "2019-10-01",
       "dependsOn": [
@@ -45,19 +45,16 @@
       "properties": {
         "mode": "Incremental",
         "template": {
-          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "1.0.0.0",
           "resources": [
             {
-              "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
-              },
-              "kind": "Storage",
-              "name": "maamo7xfjh3a6",
-              "type": "Microsoft.Storage/storageAccounts",
+              "name": "companycommunicatorf1-dev",
+              "type": "microsoft.insights/components",
               "location": "[parameters('resourceLocation')]",
-              "apiVersion": "2017-10-01"
+              "kind": "web",
+              "properties": {},
+              "apiVersion": "2015-05-01"
             }
           ]
         }
@@ -65,6 +62,6 @@
     }
   ],
   "metadata": {
-    "_dependencyType": "storage.azure"
+    "_dependencyType": "appInsights.azure"
   }
 }

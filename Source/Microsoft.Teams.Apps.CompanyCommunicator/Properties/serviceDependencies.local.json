@@ -11,12 +11,6 @@
       "type": "storage.azure",
       "connectionId": "StorageAccountConnectionString",
       "secretStore": "LocalSecretsFile"
-    },
-    "secrets1": {
-      "resourceId": null,
-      "type": "secrets.user",
-      "connectionId": null,
-      "secretStore": null
     }
   }
 }
