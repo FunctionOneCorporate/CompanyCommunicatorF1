@@ -208,7 +208,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Schedule.Func.Services
             var lista = new List<ScheduleNotification>();
             foreach (var notificationEntity in notificationEntities)
             {
-                if (date.Date == Convert.ToDateTime(notificationEntity.ScheduleDate).Date)
+                if (date >= Convert.ToDateTime(notificationEntity.ScheduleDate))
                 {
                     var summary = new ScheduleNotification
                     {

@@ -44,7 +44,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Schedule.Func
         /// <param name="log">Log parameter.</param>
         [FunctionName("ScheduleFunction")]
         public async Task RunAsync(
-            [TimerTrigger("0 0 11 * * *", RunOnStartup = true)]
+            [TimerTrigger("0 */30 * * * *", RunOnStartup = true)]
             TimerInfo scheduleInitializationTimer,
             ILogger log)
         {
@@ -57,7 +57,11 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Schedule.Func
 
                 log.LogInformation($"Definição de lista de Schedule");
 
-                lstNotification = await this.notificationService.GetAllScheduleNotificationByDateAsync(DateTime.UtcNow);
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+                DateTime dtBrNow = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                lstNotification = await this.notificationService.GetAllScheduleNotificationByDateAsync(dtBrNow);
 
                 if (lstNotification != null)
                 {

@@ -374,6 +374,18 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Bot
         }
 
         /// <summary>
+        /// Send notification about Bot not being monitored.
+        /// </summary>
+        /// <param name="turnContext">The context object for this turn.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects
+        /// or threads to receive notice of cancellation.</param>
+        /// <returns>A task that represents the message to be displayed.</returns>
+        protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        {
+            await this.EnviarMensagemAsync(turnContext, cancellationToken, "Desculpe, mas esse Bot não está sendo monitorado!");
+        }
+
+        /// <summary>
         /// Verify status of conversation.
         /// </summary>
         /// <param name="activity">Update conversation.</param>
@@ -392,6 +404,15 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Bot
             }
 
             return CompanyCommunicatorBot.TeamRenamedEventType.Equals(channelData.EventType, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private async Task EnviarMensagemAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken, string mensagem)
+        {
+            // Constroi a Mensagem
+            var message = MessageFactory.Text($"{mensagem.Trim()}");
+
+            // Envia a Mensagen
+            var res = await turnContext.SendActivityAsync(message);
         }
     }
 }

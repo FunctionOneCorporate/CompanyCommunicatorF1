@@ -714,12 +714,16 @@ class NewMessage extends React.Component<INewMessageProps, formState> {
 										label={this.localize("ScheduleCheck")}
 									/>
 									<Input
-										type="date"
+										type="datetime-local"
 										className="InputDate"
 										id="dateTxt"
 										hidden={!this.state.selectedSchedule}
 										onChange={this.addDateSchedule}
 										value={this.state.scheduleDate}
+									/>
+									<Text
+										hidden={!this.state.selectedSchedule}
+										title="O disparo da mensagem poderá sofrer um atraso de até 30 minutos."
 									/>
 									{this.state.scheduleDate === "" && this.state.selectedTemplate === false && this.state.selectedSchedule ? <Text content={this.localize("ScheduleDateChoice")} /> : null}
 									<Checkbox
