@@ -17,14 +17,15 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
     internal class GroupMembersService : IGroupMembersService
     {
         private readonly IGraphServiceClient graphServiceClient;
-
+        private readonly IUsersService usersService;
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupMembersService"/> class.
         /// </summary>
         /// <param name="graphServiceClient">graph service client.</param>
-        internal GroupMembersService(IGraphServiceClient graphServiceClient)
+        internal GroupMembersService(IGraphServiceClient graphServiceClient, IUsersService UsersService)
         {
             this.graphServiceClient = graphServiceClient ?? throw new ArgumentNullException(nameof(graphServiceClient));
+            this.usersService = UsersService ?? throw new ArgumentNullException(nameof(UsersService));
         }
 
         /// <summary>
@@ -77,7 +78,28 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
                 users?.AddRange(response.OfType<User>() ?? new List<User>());
             }
 
-            return users;
+            List<User> usersRet = new List<User>();
+            
+            foreach (var user in users)
+            {
+                try
+                {
+                    var userLicense = await this.usersService.GetUserAsync(user.Id);
+                    if (this.usersService.ValidTeamsLicense(userLicense))
+                    {
+                        usersRet.Add(user);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine("Error logado na funcao: "+ ex.Message);
+                    continue;
+                }
+            }
+
+            return usersRet;
         }
     }
 }

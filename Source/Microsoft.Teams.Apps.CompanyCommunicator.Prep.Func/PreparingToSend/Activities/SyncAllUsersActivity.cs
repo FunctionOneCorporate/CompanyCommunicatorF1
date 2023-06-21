@@ -116,7 +116,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
         private async Task ProcessUserAsync(User user)
         {
             // Delete users who were removed.
-            if (user.AdditionalData?.ContainsKey("@removed") == true)
+            if (user.AdditionalData?.ContainsKey("@removed") == true || !this.usersService.ValidTeamsLicense(user))
             {
                 var localUser = await this.userDataRepository.GetAsync(UserDataTableNames.UserDataPartition, user.Id);
                 if (localUser != null)
@@ -136,7 +136,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
             // skip users who do not have teams license.
             try
             {
-                var hasTeamsLicense = await this.usersService.HasTeamsLicenseAsync(user.Id);
+                var hasTeamsLicense = this.usersService.ValidTeamsLicense(user);
                 if (!hasTeamsLicense)
                 {
                     return;

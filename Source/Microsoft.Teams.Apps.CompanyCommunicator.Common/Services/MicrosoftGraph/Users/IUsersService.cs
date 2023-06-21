@@ -49,5 +49,10 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
         /// <param name="userId">User's AAD id.</param>
         /// <returns>true if the user has teams license, false otherwise.</returns>
         Task<bool> HasTeamsLicenseAsync(string userId);
+
+        /// <summary>
+        /// Ajuste da funcao para carregar somente os usuarios que possuem licenca do Teams.
+        /// 
+        bool ValidTeamsLicense(User user);
     }
 }

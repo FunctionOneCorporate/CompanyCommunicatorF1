@@ -13,7 +13,8 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AZURE_USERNAME": "alberto.soares@functionone.com.br"
+        "AZURE_USERNAME": "erick.souza@f1treina.com.br",
+        "VaultUri": "https://appcccompanyf1.vault.azure.net/"
       }
     },
     "Microsoft.Teams.Apps.CompanyCommunicator": {
@@ -21,7 +22,8 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AZURE_USERNAME": "alberto.soares@functionone.com.br"
+        "AZURE_USERNAME": "erick.souza@f1treina.com.br",
+        "VaultUri": "https://appcccompanyf1.vault.azure.net/"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }

@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.0.0" />
-    <PackageReference Include="Azure.Identity" Version="1.2.2" />
+    <PackageReference Include="Azure.Identity" Version="1.6.0" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.4.4" />
     <PackageReference Include="Azure.Storage.Files.Shares" Version="12.1.0" />
     <PackageReference Include="Azure.Storage.Queues" Version="12.2.0" />
@@ -91,7 +91,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>8.0</LangVersion>
     <UserSecretsId>25c7df93-ca3e-4626-9059-39149d1e3357</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/a18c4a4e-12b3-4aa7-ae70-c11ec4d58187/resourceGroups/botccdezembrofnct/providers/microsoft.insights/components/brnbotccdezembrofnct</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/2722c43f-8888-4d6d-aaf0-9c4106bb68c1/resourceGroups/botccdezembrofnct/providers/microsoft.insights/components/brnbotccdezembrofnct</ApplicationInsightsResourceId>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
 </Project>

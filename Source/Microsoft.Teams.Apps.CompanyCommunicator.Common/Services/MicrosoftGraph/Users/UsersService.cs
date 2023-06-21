@@ -10,8 +10,12 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Documents;
     using Microsoft.Graph;
     using Newtonsoft.Json.Linq;
+    using Error = Graph.Error;
+    using User = Graph.User;
+
 
     /// <summary>
     /// Users service.
@@ -127,6 +131,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
                         user.Id,
                         user.DisplayName,
                         user.UserPrincipalName,
+                        user.AssignedPlans
                     })
                     .WithMaxRetry(GraphConstants.MaxRetry)
                     .GetAsync();
@@ -144,7 +149,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
                     .Users
                     .Delta()
                     .Request()
-                    .Select("id, displayName, userPrincipalName, userType")
+                    .Select("id, displayName, userPrincipalName, userType,assignedPlans")
                     .Top(GraphConstants.MaxPageSize)
                     .WithMaxRetry(GraphConstants.MaxRetry)
                     .GetAsync();
@@ -172,7 +177,21 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
             }
 
             collectionPage.AdditionalData.TryGetValue("@odata.deltaLink", out object delta);
+            Console.WriteLine("Total de usuarios:" + users.Count);
             return (users, delta as string);
+        }
+
+        /// <inheritdoc/>
+        public bool ValidTeamsLicense(User user)
+        {
+            if (user.AssignedPlans != null)
+            {
+                return user.AssignedPlans.Any(x => x.ServicePlanId.ToString() == TeamsLicenseId && x.CapabilityStatus == "Enabled");
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <inheritdoc/>

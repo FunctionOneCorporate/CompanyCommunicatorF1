@@ -1,16 +1,10 @@
 {
   "dependencies": {
     "identityapp1": {
+      "ignored": "true",
+      "suggestion": "true",
       "type": "identityapp",
-      "connectionId": "",
-      "suggestion": "true",
-      "ignored": "true"
-    },
-    "secrets1": {
-      "type": "secrets",
-      "connectionId": "",
-      "suggestion": "true",
-      "ignored": "true"
+      "connectionId": ""
     },
     "appInsights1": {
       "type": "appInsights",
@@ -19,6 +13,15 @@
     "storage1": {
       "type": "storage",
       "connectionId": "StorageAccountConnectionString"
+    },
+    "secrets1": {
+      "type": "secrets",
+      "dynamicId": null
+    },
+    "secrets2": {
+      "type": "secrets",
+      "connectionId": "VaultUri",
+      "dynamicId": null
     }
   }
 }

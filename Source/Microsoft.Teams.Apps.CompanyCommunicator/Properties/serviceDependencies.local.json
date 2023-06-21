@@ -1,16 +1,27 @@
 {
   "dependencies": {
     "appInsights1": {
+      "secretStore": "LocalSecretsFile",
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/microsoft.insights/components/brnbotccdezembrofnct",
       "type": "appInsights.azure",
-      "connectionId": "APPINSIGHTS_CONNECTIONSTRING",
-      "secretStore": "LocalSecretsFile"
+      "connectionId": "APPINSIGHTS_CONNECTIONSTRING"
     },
     "storage1": {
+      "secretStore": "LocalSecretsFile",
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/dlj4dslxzznfg",
       "type": "storage.azure",
-      "connectionId": "StorageAccountConnectionString",
-      "secretStore": "LocalSecretsFile"
+      "connectionId": "StorageAccountConnectionString"
+    },
+    "secrets1": {
+      "type": "secrets.user",
+      "dynamicId": null
+    },
+    "secrets2": {
+      "secretStore": null,
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/appcccompanyf1",
+      "type": "secrets.keyVault",
+      "connectionId": "VaultUri",
+      "dynamicId": null
     }
   }
 }
