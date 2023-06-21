@@ -6,22 +6,21 @@
       "type": "identityapp",
       "connectionId": ""
     },
-    "appInsights1": {
-      "type": "appInsights",
-      "connectionId": "APPINSIGHTS_CONNECTIONSTRING"
-    },
-    "storage1": {
-      "type": "storage",
-      "connectionId": "StorageAccountConnectionString"
-    },
     "secrets1": {
       "type": "secrets",
       "dynamicId": null
     },
     "secrets2": {
       "type": "secrets",
-      "connectionId": "VaultUri",
-      "dynamicId": null
+      "connectionId": "VaultUri"
+    },
+    "appInsights1": {
+      "type": "appInsights",
+      "connectionId": "APPLICATIONINSIGHTS_CONNECTION_STRING"
+    },
+    "storage1": {
+      "type": "storage",
+      "connectionId": "StorageAccountConnectionString"
     }
   }
 }

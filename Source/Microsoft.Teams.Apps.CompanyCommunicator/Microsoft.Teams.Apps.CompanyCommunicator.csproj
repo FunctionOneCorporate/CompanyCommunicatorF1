@@ -7,21 +7,22 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.0.0" />
     <PackageReference Include="Azure.Identity" Version="1.6.0" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.4.4" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.1" />
     <PackageReference Include="Azure.Storage.Files.Shares" Version="12.1.0" />
-    <PackageReference Include="Azure.Storage.Queues" Version="12.2.0" />
+    <PackageReference Include="Azure.Storage.Queues" Version="12.11.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.1" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.9.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="3.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.5.0" />
     <PackageReference Include="Microsoft.Graph" Version="3.12.0" />
     <PackageReference Include="Microsoft.Graph.Beta" Version="0.22.0-preview" />
     <PackageReference Include="Microsoft.Graph.Core" Version="1.21.0" />
@@ -91,7 +92,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>8.0</LangVersion>
     <UserSecretsId>25c7df93-ca3e-4626-9059-39149d1e3357</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/2722c43f-8888-4d6d-aaf0-9c4106bb68c1/resourceGroups/botccdezembrofnct/providers/microsoft.insights/components/brnbotccdezembrofnct</ApplicationInsightsResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/2722c43f-8888-4d6d-aaf0-9c4106bb68c1/resourceGroups/RG-Company-F1/providers/microsoft.insights/components/appcccompanyf1</ApplicationInsightsResourceId>
     <StartupObject></StartupObject>
   </PropertyGroup>
 
