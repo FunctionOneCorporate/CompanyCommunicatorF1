@@ -77,7 +77,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
             {
                 // Get all members.
                 var users = await this.groupMembersService.GetGroupMembersAsync(groupId);
-                log.LogInformation($"validamos {users.Count()} membros do grupo {groupId}.");
+                log.LogInformation($"Localizados {users.Count()} membros do grupo {groupId}.");
                 // Convert to Recipients
                 var recipients = await this.GetRecipientsAsync(notificationId, users);
 
@@ -109,6 +109,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 var userEntity = await this.userDataRepository.GetAsync(UserDataTableNames.UserDataPartition, user.Id);
                 if (userEntity == null)
                 {
+
                     userEntity = new UserDataEntity()
                     {
                         AadId = user.Id,

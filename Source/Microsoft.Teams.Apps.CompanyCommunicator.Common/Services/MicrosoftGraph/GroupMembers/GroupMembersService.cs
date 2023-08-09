@@ -9,6 +9,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Graph;
+    using Polly;
 
     /// <summary>
     /// Group Members Service.
@@ -17,15 +18,16 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
     internal class GroupMembersService : IGroupMembersService
     {
         private readonly IGraphServiceClient graphServiceClient;
-        private readonly IUsersService usersService;
+        //private readonly IUsersService usersService;
+        private const string TeamsLicenseId = "57ff2da0-773e-42df-b2af-ffb7a2317929";
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupMembersService"/> class.
         /// </summary>
         /// <param name="graphServiceClient">graph service client.</param>
-        internal GroupMembersService(IGraphServiceClient graphServiceClient, IUsersService UsersService)
+        internal GroupMembersService(IGraphServiceClient graphServiceClient)
         {
             this.graphServiceClient = graphServiceClient ?? throw new ArgumentNullException(nameof(graphServiceClient));
-            this.usersService = UsersService ?? throw new ArgumentNullException(nameof(UsersService));
+           // this.usersService = UsersService ?? throw new ArgumentNullException(nameof(UsersService));
         }
 
         /// <summary>
@@ -35,13 +37,14 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
         /// <returns>group members page.</returns>
         public async Task<IGroupTransitiveMembersCollectionWithReferencesPage> GetGroupMembersPageByIdAsync(string groupId)
         {
-            return await this.graphServiceClient
+            var ret = await this.graphServiceClient
                                     .Groups[groupId]
                                     .TransitiveMembers
-                                    .Request()
+                                    .Request().Header("ConsistencyLevel", "eventual")
                                     .Top(GraphConstants.MaxPageSize)
                                     .WithMaxRetry(GraphConstants.MaxRetry)
                                     .GetAsync();
+            return ret;
         }
 
         /// <summary>
@@ -66,40 +69,37 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
             var response = await this.graphServiceClient
                                     .Groups[groupId]
                                     .TransitiveMembers
-                                    .Request()
+                                    .Request().Select("*")
                                     .Top(GraphConstants.MaxPageSize)
                                     .WithMaxRetry(GraphConstants.MaxRetry)
                                     .GetAsync();
 
-            var users = response.OfType<User>().ToList();
+            var users = response.OfType<User>().Where(x => x?.UserType == "Member").ToList();
+          
             while (response.NextPageRequest != null)
             {
                 response = await response.NextPageRequest.GetAsync();
-                users?.AddRange(response.OfType<User>() ?? new List<User>());
+                users?.AddRange(response.OfType<User>().Where(x => x?.UserType == "Member" ));
             }
 
-            List<User> usersRet = new List<User>();
-            
-            foreach (var user in users)
+            Console.WriteLine("Total de usuarios no grupo: " + users.Count);
+
+            var licendUsers = users.Where(x => this.ValidTeamsLicense(x)).ToList();
+
+            Console.WriteLine("Total de usuarios licenciados: " + licendUsers.Count);
+
+            return licendUsers;
+        }
+       private bool ValidTeamsLicense(User user)
+        {
+            if (user.AssignedPlans != null)
             {
-                try
-                {
-                    var userLicense = await this.usersService.GetUserAsync(user.Id);
-                    if (this.usersService.ValidTeamsLicense(userLicense))
-                    {
-                        usersRet.Add(user);
-                    }
-
-                }
-                catch (Exception ex)
-                {
-
-                    Console.WriteLine("Error logado na funcao: "+ ex.Message);
-                    continue;
-                }
+                return user.AssignedPlans.Any(x => x.ServicePlanId.ToString() == TeamsLicenseId && x.CapabilityStatus == "Enabled");
             }
-
-            return usersRet;
+            else
+            {
+                return false;
+            }
         }
     }
 }

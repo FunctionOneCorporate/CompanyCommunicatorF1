@@ -7,6 +7,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
     using System;
     using System.Net;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Documents;
     using Microsoft.Azure.WebJobs;
     using Microsoft.Azure.WebJobs.Extensions.DurableTask;
     using Microsoft.Extensions.Localization;
@@ -20,6 +21,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
     using Microsoft.Teams.Apps.CompanyCommunicator.Common.Services;
     using Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGraph;
     using Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.Teams;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Teams conversation activity.
@@ -85,7 +87,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
             ILogger log)
         {
             var recipient = input.recipient;
-
+            log.LogInformation($"Inicio - conversation: {recipient.ConversationId}.");
             // No-op for Team recipient.
             if (recipient.RecipientType == SentNotificationDataEntity.TeamRecipientType)
             {
@@ -98,6 +100,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
             {
                 // Create conversation using bot adapter for users with teams user id.
                 conversationId = await this.CreateConversationWithTeamsUser(input.notificationId, recipient, log);
+                log.LogInformation($"UserID {recipient.UserId} - conversation: {conversationId}.");
             }
             else
             {
@@ -110,6 +113,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
 
                 // For other user, install the User's app and get conversation id.
                 conversationId = await this.InstallAppAndGetConversationId(input.notificationId, recipient, log);
+
             }
 
             if (string.IsNullOrEmpty(conversationId))
@@ -128,6 +132,8 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
 
             // Update sent notification and user entity.
             await this.sentNotificationDataRepository.InsertOrMergeAsync(recipient);
+            log.LogInformation($"UpdateUserEntityAsync - {JsonConvert.SerializeObject(recipient)}.");
+
             await this.UpdateUserEntityAsync(recipient);
         }
 
@@ -177,7 +183,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
             // Install app.
             try
             {
-                await this.appManagerService.InstallAppForUserAsync(appId, recipient.RecipientId);
+              await this.appManagerService.InstallAppForUserAsync(appId, recipient.RecipientId);
             }
             catch (ServiceException exception)
             {
@@ -227,7 +233,6 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 ServiceUrl = recipient.ServiceUrl,
                 TenantId = recipient.TenantId,
             };
-
             await this.userDataRepository.InsertOrMergeAsync(user);
         }
     }

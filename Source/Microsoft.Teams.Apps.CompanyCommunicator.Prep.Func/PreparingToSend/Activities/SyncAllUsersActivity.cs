@@ -115,8 +115,11 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
 
         private async Task ProcessUserAsync(User user)
         {
-            // Delete users who were removed.
-            if (user.AdditionalData?.ContainsKey("@removed") == true || !this.usersService.ValidTeamsLicense(user))
+            try
+            {
+                // Delete users who were removed and remove users who do not have teams license.
+                var hasTeamsLicense = this.usersService.ValidTeamsLicense(user);
+            if (user.AdditionalData?.ContainsKey("@removed") == true || !hasTeamsLicense)
             {
                 var localUser = await this.userDataRepository.GetAsync(UserDataTableNames.UserDataPartition, user.Id);
                 if (localUser != null)
@@ -133,29 +136,23 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Prep.Func.PreparingToSend
                 return;
             }
 
-            // skip users who do not have teams license.
-            try
-            {
-                var hasTeamsLicense = this.usersService.ValidTeamsLicense(user);
-                if (!hasTeamsLicense)
-                {
-                    return;
-                }
+                // Store user.
+                await this.userDataRepository.InsertOrMergeAsync(
+                    new UserDataEntity()
+                    {
+                        PartitionKey = UserDataTableNames.UserDataPartition,
+                        RowKey = user.Id,
+                        AadId = user.Id,
+                    });
             }
-            catch (ServiceException)
+            catch (ServiceException ex)
             {
                 // Failed to get user's license details. Will skip the user.
+                ///throw new Exception($"Failed to get user's license details. Will skip the user. Error: {ex.Message}");
                 return;
             }
 
-            // Store user.
-            await this.userDataRepository.InsertOrMergeAsync(
-                new UserDataEntity()
-                {
-                    PartitionKey = UserDataTableNames.UserDataPartition,
-                    RowKey = user.Id,
-                    AadId = user.Id,
-                });
+          
         }
     }
 }

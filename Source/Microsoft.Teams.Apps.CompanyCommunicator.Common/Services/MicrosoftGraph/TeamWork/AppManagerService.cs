@@ -12,6 +12,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
     using System.Threading.Tasks;
 
     using Microsoft.Graph;
+    using Newtonsoft.Json;
     using Beta = BetaLib::Microsoft.Graph;
 
     /// <summary>
@@ -48,20 +49,24 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
                 throw new ArgumentNullException(nameof(userId));
             }
 
-            var userScopeTeamsAppInstallation = new Beta.UserScopeTeamsAppInstallation
+            var userScopeTeamsAppInstallation = new Beta.UserScopeTeamsAppInstallation()
             {
                 AdditionalData = new Dictionary<string, object>()
                 {
-                    { "teamsApp@odata.bind", $"{GraphConstants.BetaBaseUrl}/appCatalogs/teamsApps/{appId}" },
+                    { "teamsApp@odata.bind", $"{GraphConstants.V1BaseUrl}/appCatalogs/teamsApps/{appId}" },
                 },
             };
-
-            await this.betaServiceClient.Users[userId]
-                .Teamwork
-                .InstalledApps
-                .Request()
-                .WithMaxRetry(GraphConstants.MaxRetry)
-                .AddAsync(userScopeTeamsAppInstallation);
+            //Console.WriteLine("instalado app: " + JsonConvert.SerializeObject(userScopeTeamsAppInstallation));
+        
+          await this.betaServiceClient.Users[userId]
+              .Teamwork
+              .InstalledApps
+              .Request()
+              .WithMaxRetry(GraphConstants.MaxRetry)
+              .AddAsync(userScopeTeamsAppInstallation);
+              
+         
+         
         }
 
         /// <inheritdoc/>

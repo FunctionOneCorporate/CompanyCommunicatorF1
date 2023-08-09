@@ -46,7 +46,7 @@ namespace Microsoft.Teams.Apps.CompanyCommunicator.Common.Services.MicrosoftGrap
         /// <inheritdoc/>
         public IGroupMembersService GetGroupMembersService()
         {
-            return new GroupMembersService(this.serviceClient, this.GetUsersService());
+            return new GroupMembersService(this.serviceClient);
         }
 
         /// <inheritdoc/>
